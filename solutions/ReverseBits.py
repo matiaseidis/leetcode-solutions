@@ -5,13 +5,16 @@
 
 # @param n, an integer
 # @return an integer
+	
 def reverseBits(self, n):
-	result = ''
-	for i in range(32):
-		result += str(n & 1)
+	result = 0
+	
+	for i in range(31, -1, -1):
+		result += ((n & 1) * (2**i))
 		n = n >> 1
 		
-	return int(result, 2)
+	return result
+
 	
 		
 def test(exp, result):
@@ -21,6 +24,6 @@ def test(exp, result):
 		print("no - exp: {0} result: {1}".format(exp, result))
 
 
-print(str(test(964176192, reverseBits(None, 43261596))))
+test(964176192, reverseBits(None, 43261596))
 
 

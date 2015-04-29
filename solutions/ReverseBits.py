@@ -10,7 +10,7 @@ def reverseBits(self, n):
 	result = 0
 	
 	for i in range(31, -1, -1):
-		result += ((n & 1) * (2**i))
+		result |= ((n & 1) << i)
 		n = n >> 1
 		
 	return result

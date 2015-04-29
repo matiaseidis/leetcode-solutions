@@ -12,9 +12,8 @@ def reverse(self, n):
 	result = 0
 	
 	for i in range(total_digits, -1, -1):
-		current = n / 10**i
-		n -= current * 10**i
-		result += (current * 10**(total_digits-i))
+		result += (n%10) * 10**i
+		n = n / 10
 		
 	return result if positive else -result
 	

@@ -17,25 +17,6 @@ def reverse(self, n):
 		
 	return result if positive else -result
 	
-	
-
-def reverse2(self, x):
-	x_str = str(x)
-	magnitude = len(x_str)
-	start = 1 if x < 0 else 0
-	current_magnitude = 1
-	result = 0
-	
-	for c in range(start, magnitude):
-		result += int(x_str[c]) * current_magnitude
-		current_magnitude *= 10
-	
-	if x < 0: 
-		result *= -1
-	
-	return result
-		
-	
 def test(exp, result):
 	print("ok" if exp == result else "no - exp: {0} result: {1}".format(exp, result))
 	

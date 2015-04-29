@@ -1,36 +1,58 @@
+#Bitwise AND of Numbers Range  
+#Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
 
+#For example, given the range [5, 7], you should return 4.
 from math import log
-def rangeBitwiseAnd(self, m, n):
-        
-        if n == m: 
-            return m
-        elif m == 0:
-            return 0
-        elif int(log(m, 2)) != int(log(n, 2)):
-            return 0
-        else:
-            r = m
-            while(log(m, 2) != log(n, 2)):
-                r = r & m & n
-                m = m << 1
-                n = n >> 1
-            return r
-        
-        
 
-def test(a, b):
-    if a == b:
+def rangeBitwiseAndAlternative(self, m, n):
+
+    result = [False] * (int(log(n, 2))+1)
+    while(m != 0):
+        log_m = int(log(m, 2))
+        if log_m != int(log(n, 2)):
+            return parse(result)
+        
+        result[len(result)-log_m-1] = True
+        to_handle = 2**log_m - 1
+        m = m & to_handle
+        n = n & to_handle
+        
+    return parse(result)
+
+def parse(r):
+    result = 0
+    for bIdx in range(0, len(r)):
+        if r[bIdx]:
+            result = result | 2**(len(r)-bIdx-1)
+    return result
+
+def rangeBitwiseAnd(self, m, n):
+
+    result = 0
+    while(m != 0):
+        log_m = int(log(m, 2))
+        if log_m != int(log(n, 2)):
+            return result
+        
+        to_handle = 2**log_m
+        result = result | to_handle
+        to_handle_minus_one = to_handle - 1
+        m = m & to_handle_minus_one
+        n = n & to_handle_minus_one
+        
+    return result
+
+def test(expected, result):
+    if expected == result:
         print("ok")
-    else: 
-        print(str(b))
-    
-test(32, rangeBitwiseAnd(None, 36, 54))
-test(0, rangeBitwiseAnd(None, 4,22))
-test(2, rangeBitwiseAnd(None, 2,3))
-test(0, rangeBitwiseAnd(None, 1,5))
+    else:
+        print("expected {0} result {1}".format(expected, result)) 
+        
+test(12, rangeBitwiseAnd(None, 12,15))  
+test(12, rangeBitwiseAnd(None, 13,15))  
 test(4, rangeBitwiseAnd(None, 5,7))
-test(10, rangeBitwiseAnd(None, 10,10))
-test(1, rangeBitwiseAnd(None, 1,1))
-test(0, rangeBitwiseAnd(None, 0,1))
-test(0, rangeBitwiseAnd(None, 2,11))
+#test(64, rangeBitwiseAnd(None, 83, 110)) # time out
+#test(64, rangeBitwiseAnd(None, 0, 2147483647))
+
+
 
